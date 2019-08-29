@@ -1,0 +1,22 @@
+[
+    {
+      "accountId": 1,
+      "accountName": "Sairam Ravalkol",
+      "fatherName":"Rajaiah",
+      "balance": "15000",
+      "address": "khajaguda",
+      "email": "sairam.ravulakolu@gmail.com",
+      "phone": "8792364076",      
+      "imageUrl": "sairampp.jpg"
+    },
+    {
+        "accountId": 1,
+        "accountName": "Sairam Ravalkol",
+        "fatherName":"Rajaiah",
+        "balance": "15000",
+        "address": "khajaguda",
+        "email": "sairam.ravulakolu@gmail.com",
+        "phone": "8792364076",      
+        "imageUrl": "sairampp.jpg"
+      }
+]

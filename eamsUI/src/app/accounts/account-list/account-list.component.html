@@ -1,0 +1,102 @@
+<mat-card class="page" >
+  <mat-card-title class="pageTitle">{{pageTitle}}</mat-card-title>
+</mat-card>
+<div class="container mat-elevation-z8">
+
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="accent">
+      <input matInput #filter placeholder="Search">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="accountId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Account #</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.accountId}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="accountName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Account Holder</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.accountName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fatherName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Father Name</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.fatherName}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="balance">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Balance</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.balance}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.address}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.phone}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.createdAt | date: 'yyyy-MM-dd hh:mm:ss'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastUpdate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.lastUpdate  | date: 'yyyy-MM-dd hh:mm:ss'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="imageUrl">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><button mat-button (click)='toggleImage()'>
+          {{showImage ? 'Hide' : 'Show'}} Image
+        </button></mat-header-cell>
+      <mat-cell *matCellDef="let row"> <img *ngIf='showImage' [src]="row.imageUrl" [title]='row.accountName' [style.width.px]='imageWidth'
+          [style.margin.px]='imageMargin'></mat-cell>
+    </ng-container>
+
+
+    <!-- actions -->
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.companyName, row.letter, row.companyInfo, row.phoneNumber
+        , row.policyNumberFormat, row.email)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="primary" (click)="delete(row.accountId)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    No results
+  </div>
+
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>
