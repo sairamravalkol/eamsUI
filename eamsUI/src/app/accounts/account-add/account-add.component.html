@@ -19,13 +19,13 @@
     </div>
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Balance" [(ngModel)]="account.balance" name="balance" required >
+        <input matInput #input class="form-control" placeholder="Balance" [(ngModel)]="account.balance" name="balance" required type="number">
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
     <div class="form">
       <mat-form-field color="accent">
-        <input matInput #input class="form-control" placeholder="Email" [(ngModel)]="account.email" name="email" required >
+        <input matInput #input class="form-control" placeholder="Email" [(ngModel)]="account.email" name="email" type='email' required >
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
@@ -45,7 +45,7 @@
 
 
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="account" (click)="confirmAdd()">Save</button>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>
   </form>

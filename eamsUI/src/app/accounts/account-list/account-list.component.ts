@@ -48,6 +48,7 @@ export class AccountListComponent implements OnInit {
 
   addNew(account: Account): void {
     const dialogRef = this.dialog.open(AccountAddComponent, {
+      height:'600px',
       data: { account: account }
     });
 
@@ -62,7 +63,12 @@ export class AccountListComponent implements OnInit {
   }
   delete(accountId:number): void {
     if(confirm('Are you sure you want to delete of Account Number '+ accountId)) {
-      this.dataService.deleteAccount(accountId).subscribe();
+      this.dataService.deleteAccount(accountId).subscribe(result=> {
+        //console.log(result)
+        this.loadData();
+      }
+      
+      );
     }        
   }
   public loadData() {
