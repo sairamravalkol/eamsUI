@@ -26,7 +26,6 @@ export class AccountService {
     return this.dialogData;
   }
   getAllAccounts(): void {
-
     this.http.get<Account[]>(this.BASE_URL+'Accounts').subscribe(data => {      
       this.dataChange.next(data);
       console.log("Account-List::",data);

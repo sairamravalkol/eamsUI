@@ -2,14 +2,16 @@
   <mat-toolbar-row class="example-button-row">
     <span class="title"><img  src="../../assets/jbya.png"  alt="Eanjumanlogpo"></span>
 
-
+    <mat-icon aria-label="home">home</mat-icon>
     <button mat-button routerLink="/home">Home</button>
-    <button mat-button routerLink="/accounts">Account</button>
+    <mat-icon aria-label="account_balance">account_balance</mat-icon>
+    <button mat-button routerLink="/accounts">Account</button><mat-icon aria-label="attach_money">attach_money</mat-icon>
     <button mat-button routerLink="/loan">Loan</button>
+    <mat-icon aria-label="person">person</mat-icon>
     <button mat-button routerLink="/user">User</button>
     <span class="example-spacer"></span>
     <!--<button mat-button routerLink="login">Login</button>-->
-    <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+    <button mat-icon-button (click)="onLogout()" *ngIf="isLoggedIn"><mat-icon aria-label="logout">logout</mat-icon></button>
 
   </mat-toolbar-row>
 </mat-toolbar>
