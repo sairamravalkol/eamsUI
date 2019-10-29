@@ -1,7 +1,7 @@
-<mat-card class="page" >
+<mat-card class="page">
   <mat-card-title class="pageTitle">{{pageTitle}}</mat-card-title>
 </mat-card>
-<div class="container mat-elevation-z8">
+<div class="example-container mat-elevation-z8">
 
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="accent">
@@ -61,8 +61,8 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header><button mat-button (click)='toggleImage()'>
           {{showImage ? 'Hide' : 'Show'}} Image
         </button></mat-header-cell>
-      <mat-cell *matCellDef="let row"> <img *ngIf='showImage' [src]="row.imageUrl" [title]='row.accountName' [style.width.px]='imageWidth'
-          [style.margin.px]='imageMargin'></mat-cell>
+      <mat-cell *matCellDef="let row"> <img *ngIf='showImage' [src]="row.imageUrl" [title]='row.accountName'
+          [style.width.px]='imageWidth' [style.margin.px]='imageMargin'></mat-cell>
     </ng-container>
 
 
@@ -76,6 +76,9 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" (click)="deposit(row.accountId)">
+          <mat-icon>add_circle</mat-icon>
+        </button>
         <button mat-icon-button color="accent" (click)="startEdit(i, row.companyName, row.letter, row.companyInfo, row.phoneNumber
         , row.policyNumberFormat, row.email)">
           <mat-icon aria-label="Edit">edit</mat-icon>
@@ -84,6 +87,7 @@
         <button mat-icon-button color="primary" (click)="delete(row.accountId)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
+
       </mat-cell>
     </ng-container>
 

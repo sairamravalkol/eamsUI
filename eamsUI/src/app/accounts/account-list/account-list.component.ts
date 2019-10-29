@@ -7,6 +7,7 @@ import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AccountAddComponent } from '../account-add/account-add.component';
+import { DepositComponent } from 'src/app/deposit/deposit.component';
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
@@ -48,6 +49,21 @@ export class AccountListComponent implements OnInit {
 
   addNew(account: Account): void {
     const dialogRef = this.dialog.open(AccountAddComponent, {
+      height:'600px',
+      data: { account: account }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // After dialog is closed we're doing frontend updates
+        // For add we're just pushing a new row inside DataService
+        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        this.loadData();
+      }
+    });
+  }
+  deposit(account: Account): void {
+    const dialogRef = this.dialog.open(DepositComponent, {
       height:'600px',
       data: { account: account }
     });

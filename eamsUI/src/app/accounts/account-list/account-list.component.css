@@ -11,11 +11,13 @@
   background-size: cover;
   
 }
-.container {
-  display: flex;
-  flex-direction: column;
+.mat-table {
+overflow: auto;
+width: 100%;
 }
-
+.example-container {
+  overflow-x: scroll;
+}
 /* Toolbar */
 .spacer {
   flex: 1 1 auto;

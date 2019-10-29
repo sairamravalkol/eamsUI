@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { AccountAddComponent } from './accounts/account-add/account-add.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AccountAddComponent } from './accounts/account-add/account-add.componen
     AccountListComponent,
     LoginComponent,
     HeaderComponent,
-    AccountAddComponent
+    AccountAddComponent,
+    DepositComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { AccountAddComponent } from './accounts/account-add/account-add.componen
     ReactiveFormsModule,
   ],
   entryComponents: [
-    AccountAddComponent
+    AccountAddComponent,
+    DepositComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
