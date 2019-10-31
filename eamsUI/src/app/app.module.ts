@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { AccountAddComponent } from './accounts/account-add/account-add.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { LoanComponent } from './loan/loan.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DepositComponent } from './deposit/deposit.component';
     LoginComponent,
     HeaderComponent,
     AccountAddComponent,
-    DepositComponent
+    DepositComponent,
+    LoanComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { DepositComponent } from './deposit/deposit.component';
   ],
   entryComponents: [
     AccountAddComponent,
-    DepositComponent
+    DepositComponent,
+    LoanComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,34 @@
+<div class="container">
+  <h3 mat-dialog-title>Add New Loan</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput  class="form-control" placeholder="Account #" [(ngModel)]="data.accountId"
+          name="accountId" readonly>
+        <!--  <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+    </div>
+    <div class="form">
+      <mat-form-field color="accent">
+        <input matInput  class="form-control" placeholder="Account Name" [(ngModel)]="data.accountName"
+          name="accountName" readonly>
+        <!--  <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error> -->
+      </mat-form-field>
+    </div>
+    <div class="form">
+        <mat-form-field color="accent">
+          <input matInput class="form-control" placeholder="Loan Amount" [(ngModel)]="data.loan.loanAmt"
+            name="loan.loanAmt" type="number" required>
+          <!--  <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+      </div>
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1"
+        (click)="saveLoan()">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

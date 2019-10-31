@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AccountAddComponent } from '../account-add/account-add.component';
 import { DepositComponent } from 'src/app/deposit/deposit.component';
+import { Deposit } from 'src/app/model/Deposit';
+import { LoanComponent } from 'src/app/loan/loan.component';
+import { Loan } from 'src/app/model/Loan';
 @Component({
   selector: 'app-account-list',
   templateUrl: './account-list.component.html',
@@ -25,7 +28,13 @@ export class AccountListComponent implements OnInit {
   index: number;
   accountId: string;
   table: string;
+  deposit: Deposit;
   mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  loan: Loan = {
+    loanId:null,
+    loanAmt:null,
+    lastUpdate:null
+  };
 
   constructor(public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -49,7 +58,7 @@ export class AccountListComponent implements OnInit {
 
   addNew(account: Account): void {
     const dialogRef = this.dialog.open(AccountAddComponent, {
-      height:'600px',
+      height: '600px',
       data: { account: account }
     });
 
@@ -62,10 +71,9 @@ export class AccountListComponent implements OnInit {
       }
     });
   }
-  deposit(account: Account): void {
-    const dialogRef = this.dialog.open(DepositComponent, {
-      height:'600px',
-      data: { account: account }
+  getLoan(accountId:string,accountName:string):void {
+    const dialogRef = this.dialog.open(LoanComponent, {       
+      data: { accountId: accountId, accountName: accountName, loan:this.loan}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -75,17 +83,41 @@ export class AccountListComponent implements OnInit {
         this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
         this.loadData();
       }
+      });
+  }
+  getDeposit(accountId: string, accountName: string): void {
+    this.getDepositByAccountId(accountId).subscribe(result => {
+      this.deposit = result;
+      console.log("Got Deposit::", this.deposit)
+      const dialogRef = this.dialog.open(DepositComponent, {       
+        data: { accountId: accountId, accountName: accountName, deposit: this.deposit }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          // After dialog is closed we're doing frontend updates
+          // For add we're just pushing a new row inside DataService
+          this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+          this.loadData();
+        }
+      });
     });
   }
-  delete(accountId:number): void {
-    if(confirm('Are you sure you want to delete of Account Number '+ accountId)) {
-      this.dataService.deleteAccount(accountId).subscribe(result=> {
+  
+  getDepositByAccountId(accountId: string): Observable<Deposit> {
+    return this.dataService.getDepositByAccountId(accountId);
+  }
+
+
+  delete(accountId: number): void {
+    if (confirm('Are you sure you want to delete of Account Number ' + accountId)) {
+      this.dataService.deleteAccount(accountId).subscribe(result => {
         //console.log(result)
         this.loadData();
       }
-      
+
       );
-    }        
+    }
   }
   public loadData() {
     this.exampleDatabase = new AccountService(this.httpClient, null, null);

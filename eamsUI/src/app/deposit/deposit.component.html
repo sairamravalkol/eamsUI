@@ -1,53 +1,26 @@
 <div class="container">
-    <h3 mat-dialog-title>Add Account</h3>
+  <h3 mat-dialog-title>Add Deposit</h3>
   
-    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-  
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Account Name" [(ngModel)]="account.accountName" name="accountName" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-  
-    
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Father Name" [(ngModel)]="account.fatherName" name="fatherName" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Balance" [(ngModel)]="account.balance" name="balance" required type="number">
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Email" [(ngModel)]="account.email" name="email" type='email' required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Phone" [(ngModel)]="account.phone" name="phone" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form">
-        <mat-form-field color="accent">
-          <input matInput #input class="form-control" placeholder="Address" [(ngModel)]="account.address" name="address" required >
-          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </div>
-  
-  
-  
-      <div mat-dialog-actions>
-        <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
-        <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
-      </div>
-    </form>
-  </div>
-  
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <table>
+     <!--  <tr>
+        <td><h4>{{data|json}}</h4>
+              </tr> -->
+      <tr><th>Account #  :</th> <td>{{data.accountId}}</td></tr>
+      <tr><th>Account Name  :</th> <td>{{data.accountName}}</td></tr>
+      <tr><td colspan="2"><hr></td></tr>      
+      <tr><th>Basic Amount  :</th> <td>{{data.deposit.basic | number:'.2'}}</td></tr>
+      <tr><th>Loan Total  :</th> <td>{{data.deposit.loanTotal | number:'.2'}}</td></tr>
+      <tr><th>Interest Total  :</th> <td>{{data.deposit.interestTotal | number:'.2'}}</td></tr>
+      <tr><td colspan="2"><hr></td></tr>
+      <tr><th>Grand Total  :</th> <td>{{data.deposit.total | number:'.2'}}</td></tr>
+      <tr><td colspan="2"><hr></td></tr>
+
+    </table>
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1"
+        (click)="save()">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

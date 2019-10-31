@@ -76,9 +76,11 @@
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" (click)="deposit(row.accountId)">
-          <mat-icon>add_circle</mat-icon>
-        </button>
+        <button class="deposit-button" mat-icon-button (click)=" getDeposit(row.accountId,row.accountName)">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>  <button class="loan-button" mat-icon-button (click)=" getLoan(row.accountId,row.accountName)">
+            <mat-icon>money</mat-icon>
+          </button>
         <button mat-icon-button color="accent" (click)="startEdit(i, row.companyName, row.letter, row.companyInfo, row.phoneNumber
         , row.policyNumberFormat, row.email)">
           <mat-icon aria-label="Edit">edit</mat-icon>
