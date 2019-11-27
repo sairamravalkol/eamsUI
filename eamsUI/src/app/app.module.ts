@@ -16,6 +16,9 @@ import { HeaderComponent } from './header/header.component';
 import { AccountAddComponent } from './accounts/account-add/account-add.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { LoanComponent } from './loan/loan.component';
+import { LoanListComponent } from './loan-list/loan-list.component';
+import { DepositListComponent } from './deposit-list/deposit-list.component';
+import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { LoanComponent } from './loan/loan.component';
     HeaderComponent,
     AccountAddComponent,
     DepositComponent,
-    LoanComponent
+    LoanComponent,
+    LoanListComponent,
+    DepositListComponent,
+    BalanceSheetComponent
   ],
   imports: [
     BrowserModule,

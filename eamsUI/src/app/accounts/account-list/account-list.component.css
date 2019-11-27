@@ -39,6 +39,7 @@ mat-header-cell {
   background-color:#5B84B1FF;
   color: white;
   font-weight: bold;
+ 
 }
 .mat-form-field {
   font-size: 14px;
@@ -70,3 +71,4 @@ mat-header-cell {
 .deposit-button{
   color: rgb(77, 251, 62);
 }
+
