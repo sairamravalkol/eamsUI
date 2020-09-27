@@ -1,75 +1,69 @@
 /* Structure */
 
 .page {
-    background-color:#6776ca;
-    color: white;
-  }
-  
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-    
-  }
-  .mat-table {
+  background-color: #a1aade;
+  flex: 1 1 auto;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+.mat-table {
   overflow: auto;
   width: 100%;
-  }
-  .example-container {
-    overflow-x: scroll;
-  }
-  /* Toolbar */
-  .spacer {
-    flex: 1 1 auto;
-  }
-  
-  
-  /* Filter */
-  .form {
-    min-height: 56px;
-    max-height: 56px;
-    display: flex;
-    align-items: center;
-    padding: 8px 24px 0;
-    font-size: 20px;
-    justify-content: space-between;
-    border-bottom: 1px solid transparent;
-  }
-  mat-header-cell {
-    background-color:#5B84B1FF;
-    color: white;
-    font-weight: bold;
-   
-  }
-  .mat-form-field {
-    font-size: 14px;
-    flex-grow: 1;
-    margin-top: 8px;
-  }
-  
-  /* Mat table */
-  .no-results {
-    display: flex;
-    justify-content: center;
-    padding: 14px;
-    font-size: 14px;
-    font-style: italic;
-  }
-  
-  .mat-row:nth-child(even) {
-    background-color:#f2f2f2;
-  }
-  
-  .mat-cell:nth-child(1),
-  .mat-header-cell:nth-child(1){
-    flex: 0 0 5%;
-  }
-  .mat-cell:nth-child(6),
-  .mat-header-cell:nth-child(6){
-    flex: 0 0 15%;
-  }
-  .deposit-button{
-    color: rgb(77, 251, 62);
-  }
-  
-  
+}
+.example-container {
+  overflow-x: scroll;
+}
+/* Toolbar */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Filter */
+.form {
+  min-height: 56px;
+  max-height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 8px 24px 0;
+  font-size: 20px;
+  justify-content: space-between;
+  border-bottom: 1px solid transparent;
+}
+mat-header-cell {
+  background-color: #5b84b1ff;
+  color: white;
+  font-weight: bold;
+}
+.mat-form-field {
+  font-size: 14px;
+  flex-grow: 1;
+  margin-top: 8px;
+}
+
+/* Mat table */
+.no-results {
+  display: flex;
+  justify-content: center;
+  padding: 14px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+  flex: 0 0 5%;
+}
+.mat-cell:nth-child(6),
+.mat-header-cell:nth-child(6) {
+  flex: 0 0 15%;
+}
+.deposit-button {
+  color: rgb(77, 251, 62);
+}

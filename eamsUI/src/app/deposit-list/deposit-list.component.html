@@ -1,3 +1,112 @@
-<p>
-  deposit-list works!
-</p>
+<mat-card class="page">
+  <mat-card-title class="pageTitle">Monthly Deposit Entry</mat-card-title>
+
+  <div class="form">
+    <!-- <mat-form-field floatPlaceholder="never" color="accent">
+      <input matInput placeholder="Search" />
+    </mat-form-field> -->
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ex. ium"
+        #input
+      />
+    </mat-form-field>
+  </div>
+</mat-card>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="depositId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Deposit #</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">{{ row.depositId }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="accId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Account Id</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">{{ row.accId }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="accountName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Account Name</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">{{ row.accountName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="basic">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Basic</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.basic | number: ".2" }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="loanTotal">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Loan</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.loanTotal | number: ".2" }}</mat-cell
+      >
+    </ng-container>
+    <ng-container matColumnDef="interestTotal">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Interest</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        {{ row.interestTotal | number: ".2" }}</mat-cell
+      >
+    </ng-container>
+    <ng-container matColumnDef="total">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.total | number: ".2" }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Last Update</mat-header-cell
+      >
+      <mat-cell *matCellDef="let row">
+        {{ row.lastUpdate | date: "dd MMM yyyy   hh:mm a" }}</mat-cell
+      >
+    </ng-container>
+
+    <!-- actions -->
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon"
+            >add</mat-icon
+          >
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i = index"
+        ><!-- 
+             <button mat-icon-button color="accent" (click)="startEdit(i, row.companyName, row.letter, row.companyInfo, row.phoneNumber
+        , row.policyNumberFormat, row.email)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="primary" (click)="delete(row.accountId)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button> -->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    #paginator
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  >
+  </mat-paginator>
+</div>

@@ -1,5 +1,7 @@
 export class Loan {
-    loanId: string;
-    loanAmt:string;
-    lastUpdate:string;
+  loanId: string;
+  accountName: string;
+  loanAmt: string;
+  accId: string;
+  lastUpdate: string;
 }

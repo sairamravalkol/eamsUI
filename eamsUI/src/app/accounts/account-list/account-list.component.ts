@@ -1,48 +1,58 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AccountService } from 'src/app/service/account.service';
-import { Account } from '../../model/Account';
-import { DataSource } from '@angular/cdk/table';
-import { BehaviorSubject, Observable, merge, fromEvent } from 'rxjs';
-import { MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { AccountAddComponent } from '../account-add/account-add.component';
-import { DepositComponent } from 'src/app/deposit/deposit.component';
-import { Deposit } from 'src/app/model/Deposit';
-import { LoanComponent } from 'src/app/loan/loan.component';
-import { Loan } from 'src/app/model/Loan';
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { AccountService } from "src/app/service/account.service";
+import { Account } from "../../model/Account";
+import { DataSource } from "@angular/cdk/table";
+import { BehaviorSubject, Observable, merge, fromEvent } from "rxjs";
+import { MatPaginator, MatSort, MatDialog } from "@angular/material";
+import { map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { AccountAddComponent } from "../account-add/account-add.component";
+import { DepositComponent } from "src/app/deposit/deposit.component";
+import { Deposit } from "src/app/model/Deposit";
+import { LoanComponent } from "src/app/loan/loan.component";
+import { Loan } from "src/app/model/Loan";
 @Component({
-  selector: 'app-account-list',
-  templateUrl: './account-list.component.html',
-  styleUrls: ['./account-list.component.css']
+  selector: "app-account-list",
+  templateUrl: "./account-list.component.html",
+  styleUrls: ["./account-list.component.css"],
 })
 export class AccountListComponent implements OnInit {
-
   imageWidth = 60;
   imageMargin = 2;
   showImage = false;
-  pageTitle: string = 'Account-List'
-  displayedColumns = ['accountId', 'accountName', 'fatherName', 'balance', 'address', 'email', 'phone', 'imageUrl', 'lastUpdate', 'createdAt', 'actions'];
+  pageTitle: string = "Account List Details";
+  displayedColumns = [
+    "status",
+    "accountId",
+    "accountName",
+    "fatherName",
+    "balance",
+    "lastUpdate",
+    "actions",
+  ];
   exampleDatabase: AccountService | null;
   dataSource: ExampleDataSource | null;
   index: number;
   accountId: string;
   table: string;
-  deposit: Deposit;
-  mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   loan: Loan = {
-    loanId:null,
-    loanAmt:null,
-    lastUpdate:null
+    loanId: null,
+    accountName: null,
+    loanAmt: null,
+    accId: null,
+    lastUpdate: null,
   };
+  deposit: Deposit;
 
-  constructor(public httpClient: HttpClient,
+  constructor(
+    public httpClient: HttpClient,
     public dialog: MatDialog,
-    public dataService: AccountService) { }
+    public dataService: AccountService
+  ) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild("filter") filter: ElementRef;
 
   ngOnInit() {
     this.loadData();
@@ -58,71 +68,84 @@ export class AccountListComponent implements OnInit {
 
   addNew(account: Account): void {
     const dialogRef = this.dialog.open(AccountAddComponent, {
-      height: '600px',
-      data: { account: account }
+      height: "600px",
+      data: { account: account },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
-        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        this.exampleDatabase.dataChange.value.push(
+          this.dataService.getDialogData()
+        );
         this.loadData();
       }
     });
   }
-  getLoan(accountId:string,accountName:string):void {
-    const dialogRef = this.dialog.open(LoanComponent, {       
-      data: { accountId: accountId, accountName: accountName, loan:this.loan}
+  getLoan(accountId: string, accountName: string): void {
+    const dialogRef = this.dialog.open(LoanComponent, {
+      data: { accountId: accountId, accountName: accountName, loan: this.loan },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
-        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        this.exampleDatabase.dataChange.value.push(
+          this.dataService.getDialogData()
+        );
         this.loadData();
       }
-      });
+    });
   }
   getDeposit(accountId: string, accountName: string): void {
-    this.getDepositByAccountId(accountId).subscribe(result => {
+    this.getDepositByAccountId(accountId).subscribe((result) => {
       this.deposit = result;
-      console.log("Got Deposit::", this.deposit)
-      const dialogRef = this.dialog.open(DepositComponent, {       
-        data: { accountId: accountId, accountName: accountName, deposit: this.deposit }
+      console.log("Got Deposit::", this.deposit);
+      const dialogRef = this.dialog.open(DepositComponent, {
+        data: {
+          accountId: accountId,
+          accountName: accountName,
+          deposit: this.deposit,
+        },
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe((result) => {
         if (result === 1) {
           // After dialog is closed we're doing frontend updates
           // For add we're just pushing a new row inside DataService
-          this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+          this.exampleDatabase.dataChange.value.push(
+            this.dataService.getDialogData()
+          );
           this.loadData();
         }
       });
     });
   }
-  
+
   getDepositByAccountId(accountId: string): Observable<Deposit> {
     return this.dataService.getDepositByAccountId(accountId);
   }
 
-
   delete(accountId: number): void {
-    if (confirm('Are you sure you want to delete of Account Number ' + accountId)) {
-      this.dataService.deleteAccount(accountId).subscribe(result => {
+    if (
+      confirm("Are you sure you want to delete of Account Number " + accountId)
+    ) {
+      this.dataService.deleteAccount(accountId).subscribe((result) => {
         //console.log(result)
         this.loadData();
-      }
-
-      );
+      });
     }
   }
   public loadData() {
     this.exampleDatabase = new AccountService(this.httpClient, null, null);
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-    fromEvent(this.filter.nativeElement, 'keyup')
+    this.dataSource = new ExampleDataSource(
+      this.exampleDatabase,
+      this.paginator,
+      this.sort
+    );
+    fromEvent(this.filter.nativeElement, "keyup")
       // .debounceTime(150)
       // .distinctUntilChanged()
       .subscribe(() => {
@@ -132,12 +155,10 @@ export class AccountListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
   }
-
 }
 
-
 export class ExampleDataSource extends DataSource<Account> {
-  _filterChange = new BehaviorSubject('');
+  _filterChange = new BehaviorSubject("");
 
   get filter(): string {
     return this._filterChange.value;
@@ -150,12 +171,14 @@ export class ExampleDataSource extends DataSource<Account> {
   filteredData: Account[] = [];
   renderedData: Account[] = [];
 
-  constructor(public _exampleDatabase: AccountService,
+  constructor(
+    public _exampleDatabase: AccountService,
     public _paginator: MatPaginator,
-    public _sort: MatSort) {
+    public _sort: MatSort
+  ) {
     super();
     // Reset to the first page when the user changes the filter.
-    this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
+    this._filterChange.subscribe(() => (this._paginator.pageIndex = 0));
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
@@ -165,63 +188,97 @@ export class ExampleDataSource extends DataSource<Account> {
       this._exampleDatabase.dataChange,
       this._sort.sortChange,
       this._filterChange,
-      this._paginator.page
+      this._paginator.page,
     ];
 
     this._exampleDatabase.getAllAccounts();
 
+    return merge(...displayDataChanges).pipe(
+      map(() => {
+        // Filter data
+        this.filteredData = this._exampleDatabase.data
+          .slice()
+          .filter((account: Account) => {
+            const searchStr = (
+              account.accountId +
+              account.accountName +
+              account.fatherName +
+              account.balance +
+              account.address +
+              account.email +
+              account.imageUrl +
+              account.phone +
+              account.lastUpdate +
+              account.createdAt
+            ).toLowerCase();
+            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+          });
 
-    return merge(...displayDataChanges).pipe(map(() => {
-      // Filter data
-      this.filteredData = this._exampleDatabase.data.slice().filter((account: Account) => {
-        const searchStr = (account.accountId + account.accountName + account.fatherName + account.balance +
-          account.address + account.email + account.imageUrl + account.phone + account.lastUpdate + account.createdAt).toLowerCase();
-        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      });
+        // Sort filtered data
+        const sortedData = this.sortData(this.filteredData.slice());
 
-      // Sort filtered data
-      const sortedData = this.sortData(this.filteredData.slice());
-
-      // Grab the page's slice of the filtered sorted data.
-      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
-      return this.renderedData;
-    }
-    ));
+        // Grab the page's slice of the filtered sorted data.
+        const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+        this.renderedData = sortedData.splice(
+          startIndex,
+          this._paginator.pageSize
+        );
+        return this.renderedData;
+      })
+    );
   }
 
-  disconnect() { }
-
+  disconnect() {}
 
   /** Returns a sorted copy of the database data. */
   sortData(data: Account[]): Account[] {
-    if (!this._sort.active || this._sort.direction === '') {
+    if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
 
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number | string = "";
+      let propertyB: number | string = "";
 
       switch (this._sort.active) {
-        case 'accountId': [propertyA, propertyB] = [a.accountId, b.accountId]; break;
-        case 'accountName': [propertyA, propertyB] = [a.accountName, b.accountName]; break;
-        case 'fatherName': [propertyA, propertyB] = [a.fatherName, b.fatherName]; break;
-        case 'balance': [propertyA, propertyB] = [a.balance, b.balance]; break;
-        case 'address': [propertyA, propertyB] = [a.address, b.address]; break;
-        case 'email': [propertyA, propertyB] = [a.email, b.email]; break;
-        case 'phone': [propertyA, propertyB] = [a.phone, b.phone]; break;
-        case 'imageUrl': [propertyA, propertyB] = [a.imageUrl, b.imageUrl]; break;
-        case 'lastUpdate': [propertyA, propertyB] = [a.lastUpdate, b.lastUpdate]; break;
-        case 'createdAt': [propertyA, propertyB] = [a.createdAt, b.createdAt]; break;
-
+        case "accountId":
+          [propertyA, propertyB] = [a.accountId, b.accountId];
+          break;
+        case "accountName":
+          [propertyA, propertyB] = [a.accountName, b.accountName];
+          break;
+        case "fatherName":
+          [propertyA, propertyB] = [a.fatherName, b.fatherName];
+          break;
+        case "balance":
+          [propertyA, propertyB] = [a.balance, b.balance];
+          break;
+        case "address":
+          [propertyA, propertyB] = [a.address, b.address];
+          break;
+        case "email":
+          [propertyA, propertyB] = [a.email, b.email];
+          break;
+        case "phone":
+          [propertyA, propertyB] = [a.phone, b.phone];
+          break;
+        case "imageUrl":
+          [propertyA, propertyB] = [a.imageUrl, b.imageUrl];
+          break;
+        case "lastUpdate":
+          [propertyA, propertyB] = [a.lastUpdate, b.lastUpdate];
+          break;
+        case "createdAt":
+          [propertyA, propertyB] = [a.createdAt, b.createdAt];
+          break;
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+      return (
+        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
+      );
     });
   }
 }
-
